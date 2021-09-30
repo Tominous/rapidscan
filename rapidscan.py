@@ -220,7 +220,7 @@ tool_names = [
                 ["nmap","Nmap - Fast Scan [Only Few Port Checks]","nmap",1],
                 ["theHarvester","The Harvester - Scans for emails using Google's passive search.","theHarvester",1],
                 ["dnsrecon","DNSRecon - Attempts Multiple Zone Transfers on Nameservers.","dnsrecon",1],
-                #["fierce","Fierce - Attempts Zone Transfer [No Brute Forcing]","fierce",1],
+                ["fierce","Fierce - Attempts Zone Transfer [No Brute Forcing]","fierce",1],
                 ["dnswalk","DNSWalk - Attempts Zone Transfer.","dnswalk",1],
                 ["whois","WHOis - Checks for Administrator's Contact Information.","whois",1],
                 ["nmap_header","Nmap [XSS Filter Check] - Checks if XSS Protection Header is present.","nmap",1],
@@ -306,7 +306,7 @@ tool_cmd   = [
                 ["nmap -F --open -Pn ",""],
                 ["theHarvester -l 50 -b google -d ",""],
                 ["dnsrecon -d ",""],
-                #["fierce -wordlist xxx -dns ",""],
+                ["fierce -wordlist xxx -dns ",""],
                 ["dnswalk -d ","."],
                 ["whois ",""],
                 ["nmap -p80 --script http-security-headers -Pn ",""],
@@ -392,7 +392,7 @@ tool_resp   = [
                 ["Some ports are open. Perform a full-scan manually.","l",8],
                 ["Email Addresses Found.","l",9],
                 ["Zone Transfer Successful using DNSRecon. Reconfigure DNS immediately.","h",10],
-                #["Zone Transfer Successful using fierce. Reconfigure DNS immediately.","h",10],
+                ["Zone Transfer Successful using fierce. Reconfigure DNS immediately.","h",10],
                 ["Zone Transfer Successful using dnswalk. Reconfigure DNS immediately.","h",10],
                 ["Whois Information Publicly Available.","i",11],
                 ["XSS Protection Filter is Disabled.","m",12],
@@ -484,7 +484,7 @@ tool_status = [
                 ["tcp open",0,proc_med," <  2m","nmapopen",["Failed to resolve"]],
                 ["No emails found",1,proc_med," <  3m","harvester",["No hosts found","No emails found"]],
                 ["[+] Zone Transfer was successful!!",0,proc_low," < 20s","dnsreconzt",["Could not resolve domain"]],
-                #["Whoah, it worked",0,proc_low," < 30s","fiercezt",["none"]],
+                ["Whoah, it worked",0,proc_low," < 30s","fiercezt",["none"]],
                 ["0 errors",0,proc_low," < 35s","dnswalkzt",["!!!0 failures, 0 warnings, 3 errors."]],
                 ["Admin Email:",0,proc_low," < 25s","whois",["No match for domain"]],
                 ["XSS filter is disabled",0,proc_low," < 20s","nmapxssh",["Failed to resolve"]],
@@ -835,14 +835,14 @@ elif args_namespace.target:
                 rs_tool_output_file = open(temp_file).read()
                 if tool_status[tool][arg2] == 0:
                     if tool_status[tool][arg1].lower() in rs_tool_output_file.lower():
-                        #print "\t"+ vul_info(tool_resp[tool][arg2]) + bcolors.BADFAIL +" "+ tool_resp[tool][arg1] + bcolors.ENDC
+                        print "\t"+ vul_info(tool_resp[tool][arg2]) + bcolors.BADFAIL +" "+ tool_resp[tool][arg1] + bcolors.ENDC
                         vul_remed_info(tool,tool_resp[tool][arg2],tool_resp[tool][arg3])
                         rs_vul_list.append(tool_names[tool][arg1]+"*"+tool_names[tool][arg2])
                 else:
                     if any(i in rs_tool_output_file for i in tool_status[tool][arg6]):
                         m = 1 # This does nothing.
                     else:
-                        #print "\t"+ vul_info(tool_resp[tool][arg2]) + bcolors.BADFAIL +" "+ tool_resp[tool][arg1] + bcolors.ENDC
+                        print "\t"+ vul_info(tool_resp[tool][arg2]) + bcolors.BADFAIL +" "+ tool_resp[tool][arg1] + bcolors.ENDC
                         vul_remed_info(tool,tool_resp[tool][arg2],tool_resp[tool][arg3])
                         rs_vul_list.append(tool_names[tool][arg1]+"*"+tool_names[tool][arg2])
         else:
